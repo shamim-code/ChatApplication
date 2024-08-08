@@ -15,7 +15,7 @@ export default function Message() {
   console.log(`ownId: ${ownId } and receiverId: ${receiverId}`)
 
   useEffect(() => {
-    axios.get(`http://localhost:2000/getMessagesById/${ownId}/${receiverId}`)
+    axios.get(`https://chatapplication-1-lliu.onrender.com/getMessagesById/${ownId}/${receiverId}`)
    .then(response => setMessage(response.data))
    .catch(error => console.log(error));
   }, [])
