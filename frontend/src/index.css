@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body,html {
+    overflow-x: hidden;
+    position: relative;
+    @apply no-scrollbar;
+}
+
+
+@layer utilities {
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+     /* Hide scrollbar for IE, Edge and Firefox */
+      .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+    }
+}
+
+
+.msg-left {
+    @apply m-2 flex 
+}
+
+.msg-right {
+    @apply m-2 flex translate-x-[50%]
+}
+
+.chat-list {
+    @apply bg-slate-400 mt-10 h-[90vh] p-2 overflow-y-auto
+}
+
+.chat-box{
+    @apply bg-slate-200 rounded-sm px-2 py-1 m-1 cursor-pointer
+}
+
+.people-list{
+    @apply mt-[8%] bg-sky-500 pb-2 h-dvh
+}
+
+.friend-box{
+    @apply bg-slate-300 flex justify-between px-10 m-2 rounded-md
+}
+
