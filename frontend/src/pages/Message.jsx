@@ -12,11 +12,10 @@ export default function Message() {
   const ownId = localStorage.getItem('id');
 
   const [message, setMessage] = useState([]);
+  const lastMessage = useRef(null);
   const [newMessage, setNewMessage] = useState({});
+  const messageDiv = useRef(null);
 
-  const len = message.length;
-
-  const lastMessage = useRef();
 
   const formik = useFormik({
     initialValues: {
@@ -28,20 +27,27 @@ export default function Message() {
         receiverId: receiverId,
         message: values['message']
       });
-      setNewMessage(res.data);
+      setNewMessage(values['message']);
       formik.resetForm();
     }
   });
 
   useEffect(() => {
-    axios.get(`http://localhost:2000/getMessagesById/${ownId}/${receiverId}`)
-      .then(response => setMessage(response.data))
-      .catch(error => console.log(error));
+    const fetchMessages = async () => {
+      try {
+        const response = await axios.get(`http://localhost:2000/getMessagesById/${ownId}/${receiverId}`);
+        setMessage(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchMessages();
 
     // Listen for 'newMessage' event from the server
     socket.on('newMessage', (newMessage) => {
-      if (newMessage.conversationId === message[0]?.conversationId) {
-        setMessage((prev) => [...prev, newMessage]);
+      if (newMessage.senderId === receiverId || newMessage.senderId === ownId) {
+        setMessage((prevMessages) => [...prevMessages, newMessage]);
       }
     });
 
@@ -49,31 +55,35 @@ export default function Message() {
     return () => {
       socket.off('newMessage');
     };
-  }, [message, ownId, receiverId]);
+  }, [ownId, receiverId, message]);
 
+
+  // Scroll into view when the message list updates
   useEffect(() => {
     if (lastMessage.current) {
-      lastMessage.current.scrollIntoView({ behavior: 'smooth' });
+      lastMessage.current.scrollIntoView(); // Immediate scroll for new messages
     }
   }, [message]);
+  
+
+
 
   return (
     <div>
       <h1 className=' bg-blue-500 z-20 text-white text-center text-xl py-1 drop-shadow-md'>Message</h1>
 
       <div id='container' className='w-screen flex flex-col items-center'>
-
         <section className='fixed top-8 w-full bg-gray-200 flex gap-2 pl-2 py-1 drop-shadow-sm justify-center'>
           <img className='h-8' src="/avatar.png" alt="image" />
           <p className=' inline-block mt-1'>{param['name']}</p>
         </section>
 
         <section className=' w-[700px] bg-slate-100 rounded-sm '>
-          <div className="message-container mt-11 h-[81vh] overflow-y-auto overflow-x-hidden no-scrollbar">
+          <div ref={messageDiv} className="message-container mt-11 h-[81vh] overflow-y-auto overflow-x-hidden no-scrollbar">
             {message.map((msg, i) => (
               <MessageBox key={i} type={`${msg['sender'] === ownId ? "own" : "other"}`} date={msg['createdAt']} msg={msg['message']} />
             ))}
-            <div ref={lastMessage}></div> {/* This will scroll into view */}
+            <div className='mt-1' ref={lastMessage}></div> {/* This will scroll into view */}
           </div>
 
           <form onSubmit={formik.handleSubmit} className=' mx-1 mb-1 fixed bottom-0 w-full'>

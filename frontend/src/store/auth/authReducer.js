@@ -6,7 +6,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 export const loginAsync = createAsyncThunk(
     'auth/login',
     async (payload) => {
-        const res = await axios.post('http://localhost:2000/login', payload);
+        const res = await axios.post('https://chatapplication-1-lliu.onrender.com/login', payload);
         localStorage.setItem('id', res.data['data']['_id']);
     }
 );
@@ -14,7 +14,7 @@ export const loginAsync = createAsyncThunk(
 
 export const registrationAsync = createAsyncThunk('auth/registration',
     async(payload)=> {
-        const res = await axios.post('http://localhost:2000/register', payload);
+        const res = await axios.post('https://chatapplication-1-lliu.onrender.com/register', payload);
     }
 )
 

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Navbar from '../components/Navbar'
-import 'remixicon/fonts/remixicon.css'
 import Chatbox from '../components/Chatbox'
 import axios from 'axios'
 
