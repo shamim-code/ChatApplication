@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import { useNavigate } from 'react-router-dom'
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import Sidebar from '../components/Sidebar';
 
 
 export default function Home() {
@@ -42,13 +43,39 @@ export default function Home() {
 
   })
 
+  const SlideOpen = () => {
+    gsap.to("#slide", {
+      duration: 0.5,
+      x: "-10%",
+      ease: "back.inOut(1.7)",
+      transformOrigin: "right center",
+      transition: "x 0.5s ease-in-out"
+    });
+
+    gsap.from("ul li", {
+      duration: 0.5,
+      opacity: 0,
+      stagger: 0.1
+    })
+  };
+
+  const SlideClose = () => {
+    gsap.to("#slide", {
+      duration: 0.5,
+      x: "150%",
+      ease: "back.inOut(1.7)",
+      transformOrigin: "right center",
+      transition: "x 0.5s ease-in-out"
+    });
+  };
+
 
 
   return (
-    <div className=' no-scrollbar'>
-      <Navbar />
-      
-      <div className=" hero-section flex justify-evenly mt-[15%] md:m-5 bg-sky-400 rounded h-dvh ">
+    <div className=' no-scrollbar relative'>
+      <Sidebar />
+      <Navbar open ={SlideOpen} close={SlideClose}/>
+      <div className=" hero-section flex justify-evenly mt-[15%] md:m-5 bg-gradient-to-r from-cyan-400 to-purple-500 rounded h-dvh ">
         <div className="section1 text-center">
           <h1 ref={welcomeText} className='mt-[20%] text-xl uppercase font-bold text-white mb-2'>Welcome to ChatApp</h1>
           <p ref={subtitleText} className='text-gray-100'>This is a simple chat application built with React, NodeJS, Express, Socket.IO, and MongoDB.</p>
