@@ -2,17 +2,36 @@ import React, { useRef, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { useSelector } from 'react-redux'
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Navbar() {
 
-  const isLogged = useSelector((state)=> state.auth.isAuthenticated) ;
-
+  const isLogged =  localStorage.getItem("id");
   const nevigate = useNavigate();
-
   const text = useRef();
-
   const tl = gsap.timeline();
+
+  const logout =()=> {
+    localStorage.removeItem('id');
+    localStorage.removeItem('username');
+    nevigate('/');
+  }
+
+  const notify = () => toast("LogOut success",{
+    duration:2000,
+    position: "top-center",
+    style: {},
+    icon: "",
+    iconTheme: {
+      primary: '#000',
+      secondary: '#fff'
+    },
+    ariaProps: {
+      role: 'status',
+      'aria-live': 'polite',
+    },
+  })
+
 
     useGSAP(()=> {
       tl.from(text.current, {
@@ -36,11 +55,11 @@ export default function Navbar() {
                <li className="text-gray-300 hover:text-white hover:duration-200"><NavLink to='/'>Home</NavLink></li>
                <li onClick={()=> isLogged ? nevigate("/chats"):alert("Please Login First")} className="text-gray-300 hover:text-white hover:duration-200"><NavLink>Chats</NavLink></li>
                <li onClick={()=> isLogged ? nevigate("/addfriend"):alert("Please Login First")} className="text-gray-300 hover:text-white hover:duration-200"><NavLink>Add Friend</NavLink></li>
-               <li className="text-gray-300 hover:text-white hover:duration-200"><NavLink to='/login'>Login</NavLink></li>
-               <li className="text-gray-300 hover:text-white hover:duration-200"><NavLink to='/register'>Register</NavLink></li>
-               {isLogged ? <li className="text-gray-300 hover:text-white hover:duration-200 cursor-pointer">Logout</li>: ""}
+               <li onClick={()=> isLogged ? alert("You are already logged in.") : nevigate("/login")} className="text-gray-300 hover:text-white hover:duration-200"><NavLink>Login</NavLink></li>
+               <li onClick={()=> isLogged ? alert("You are already logged in."):nevigate("/register")} className="text-gray-300 hover:text-white hover:duration-200"><NavLink>Registration</NavLink></li>
+               {isLogged ? <li onClick={()=> logout()} className="text-gray-300 hover:text-white hover:duration-200 cursor-pointer">Logout</li>: ""}
             </ul>
-
+            <Toaster />
         </div>
     );
 }

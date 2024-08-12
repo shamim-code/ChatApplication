@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux'
 import { loginAsync } from "../store/auth/authReducer";
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
-
 
 export default function Login() {
 
@@ -25,20 +24,23 @@ export default function Login() {
   })
 
   const dispatch = useDispatch();
-  const nevigate = useNavigate();
+  const navigate = useNavigate();
 
-  const isLoggedIn = useSelector((state)=> state.auth.isAuthenticated)
+  const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
 
-  if(isLoggedIn){
-    setTimeout(()=> nevigate('/chats'), 2000);
-    notify();
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      notify();
+      setTimeout(() => navigate('/chats'), 2000);
+    }
+  }, [isLoggedIn, navigate]);
 
   const TheFormik = useFormik({
     initialValues: {
        email: '',
        password: '',
-    }, onSubmit: (values)=> {
+    }, 
+    onSubmit: (values) => {
       dispatch(loginAsync(values));
     }
   })

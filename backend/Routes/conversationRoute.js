@@ -10,7 +10,7 @@ conversationRoute.get("/getAllConversationsById/:id", getAllConversationsById);
 
 conversationRoute.get("/getMessagesById/:id1/:id2", fetchMessage);
 
-conversationRoute.post("/send/message/:id",sendMessage);
+conversationRoute.post("/send/message",sendMessage);
 
 conversationRoute.get("/getOthersPeople/:id", getOthersPeople);
 

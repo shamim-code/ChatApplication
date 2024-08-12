@@ -1,12 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import FriendBox from "../components/FriendBox";
+import axios from 'axios';
 
 export default function AddFriend() {
 
-    useEffect(()=> {
+  const [othersPeople, setOthersPeople] = useState([]);
+  const id = localStorage.getItem('id');
 
-    })
+    useEffect(()=> {
+        const fetchData = async() => {
+          try {
+            const res = await axios.get(`http://localhost:2000/getOthersPeople/${id}`);
+            setOthersPeople(res.data);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+
+        fetchData();
+    },[id])
+
+    console.log(othersPeople);
 
   return (
     <div>
@@ -17,7 +32,11 @@ export default function AddFriend() {
           People are connected in this platfrom
         </h1>
         <div>
-          <FriendBox />
+          {
+            othersPeople.map((person) => (
+              <FriendBox key={person._id} person={person} />
+            ))
+          }
         </div>
       </div>
     </div>

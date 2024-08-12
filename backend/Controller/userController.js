@@ -37,11 +37,47 @@ const getOthersPeople = async (req, res) => {
 
   const userId = req.params.id;
 
-  const conversations = await conversationModel.find({ members: userId });
-  
-  res.send(conversations);
+  const myFriends = await conversationModel.aggregate(
+    [
+      {
+        $match:{members:{$in:[userId]}}
+      },
+      {
+          $project: {
+              members: {
+                  $filter: {
+                      input: "$members",
+                      as: "member",
+                      cond: { $ne: ["$$member", userId] }
+                  }
+              },
+              _id: 0
+          }
+      },
+      {
+          $unwind:"$members"
+      }
+    ]
+  )
+
+  const myFriendsId = myFriends.map(friend => new mongoose.Types.ObjectId(friend.members));
+  // Convert the specific ID to ObjectId
+const userIdToExclude = new mongoose.Types.ObjectId(userId);
+
+  const otherUser = await userModel.aggregate([
+    {
+        $project:{_id:1}
+    },
+    {
+      $match: {
+        _id: { $nin: [...myFriendsId,userIdToExclude] }
+      }
+    }
+])
 
 
+  res.send(otherUser);
+ 
 };
 
 const login = async (req, res) => {

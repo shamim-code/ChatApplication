@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const authRuter = require('./Routes/authRoute');
 const conversationRoute = require('./Routes/conversationRoute');
+const {Server} = require('socket.io');
 
 
 app.use(cors({
@@ -23,6 +24,20 @@ app.use(authRuter);
 app.use(conversationRoute);
 
 const server = http.createServer(app);
+
+const io = new Server(server,{
+  cors:{
+    origin: 'http://localhost:5173',
+    credentials: true, // enable cookies
+  }
+});
+
+io.on('connection', (socket)=> {
+
+  socket.on("newMessage", (message) =>{
+      io.emit('newMessage', message);
+  })
+})
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello world</h1>');
@@ -42,3 +57,4 @@ server.listen(2000, () => {
   connection();
   console.log('listening on *:2000');
 });
+

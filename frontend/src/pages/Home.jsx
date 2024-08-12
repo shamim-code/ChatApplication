@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
+
 export default function Home() {
 
   const welcomeText = useRef();

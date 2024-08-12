@@ -1,21 +1,36 @@
+
 const conversationModel = require("../Model/conversationModel");
 const messageModel = require("../Model/messageModel");
 
+
+
 const sendMessage =async(req, res)=>{
 
-    const conversationId = req.params.id;
 
     const {message, senderId, receiverId} = req.body;
 
-    try {
 
-        const newConversation = await messageModel({consversationId:conversationId, sender: senderId, receiver: receiverId, message:message});
+    try {
+        const conversationId = await conversationModel.aggregate([
+            {
+                $match:{members:{$in:[senderId,receiverId]}}
+            },
+            {
+                $project:{_id:1}
+            }
+        ])
+
+        const newConversation = await messageModel({consversationId:conversationId[0]['_id'], sender: senderId, receiver: receiverId, message:message});
         await newConversation.save();
-        res.send(newConversation);
-        
+
+       
+
+        res.status(201).send(newConversation);
+
     } catch (error) {
         res.send(error.message);
     }
+
 }
 
 
@@ -26,7 +41,7 @@ const fetchMessage = async(req, res)=>{
 
 
     try {
-        const searchConversation = await conversationModel.findOne({members:[user1,user2]});
+        const searchConversation = await conversationModel.findOne({members:{$in:[user1,user2]}});
         const messages = await messageModel.find({consversationId: searchConversation['_id']});
         res.send(messages);
         
