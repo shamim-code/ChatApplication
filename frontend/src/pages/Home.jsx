@@ -75,7 +75,7 @@ export default function Home() {
     <div className=' no-scrollbar relative'>
       <Navbar open ={SlideOpen} close={SlideClose}/>
       <Sidebar />
-      <div className=" hero-section flex justify-evenly mt-[15%] md:m-5 bg-gradient-to-r from-cyan-400 to-purple-500 rounded h-dvh ">
+      <div className=" hero-section flex justify-evenly mt-[15%] md:m-5 bg-gradient-to-r from-cyan-400 to-purple-500 rounded h-[80vh] ">
         <div className="section1 text-center">
           <h1 ref={welcomeText} className='mt-[20%] text-xl uppercase font-bold text-white mb-2'>Welcome to ChatApp</h1>
           <p ref={subtitleText} className='text-gray-100'>This is a simple chat application built with React, NodeJS, Express, Socket.IO, and MongoDB.</p>
