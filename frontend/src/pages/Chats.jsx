@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Navbar from '../components/Navbar'
 import Chatbox from '../components/Chatbox'
 import axios from 'axios'
+import Sidebar from '../components/Sidebar'
 
 export default function Chats() {
 
@@ -20,7 +21,7 @@ export default function Chats() {
   return (
     <div>
        <Navbar />
-
+       <Sidebar />
        <section className="chat-list">
           
           {

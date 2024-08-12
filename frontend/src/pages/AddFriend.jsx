@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import FriendBox from "../components/FriendBox";
 import axios from 'axios';
+import Sidebar from './../components/Sidebar';
 
 export default function AddFriend() {
 
@@ -26,7 +27,7 @@ export default function AddFriend() {
   return (
     <div>
       <Navbar />
-
+      <Sidebar />
       <div className="people-list">
         <h1 className=" text-center uppercase font-semibold text-white underline">
           People are connected in this platfrom

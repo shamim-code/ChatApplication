@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { registrationAsync } from "../store/auth/authReducer";
+import Sidebar from "../components/Sidebar";
 
 export default function Registration() {
 
@@ -23,6 +24,7 @@ export default function Registration() {
   return (
     <div>
       <Navbar />
+      <Sidebar />
 
       <div className=" h-screen w-screen overflow-hidden mt-10">
         <form onSubmit={formik.handleSubmit} className=" bg-sky-600 m-5 p-5 flex flex-col items-center gap-5 rounded-md">

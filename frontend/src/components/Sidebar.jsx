@@ -17,7 +17,7 @@ export default function Sidebar() {
 
 
   return (
-    <div id='slide' className='absolute top-0 z-20 right-0 translate-x-[150%] w-[50%] p-3 h-[500px] bg-gradient-to-r from-violet-600 to-indigo-600'>
+    <div id='slide' className='absolute top-10 z-20 right-0 translate-x-[150%] w-[50%] p-3 h-[500px] bg-gradient-to-r from-violet-600 to-indigo-600'>
       <ul className="md:hidden">
         <li className="text-gray-300 hover:text-white hover:duration-200"><NavLink to='/'>Home</NavLink></li>
         <li onClick={() => isLogged ? navigate("/chats") : alert("Please Login First")} className="text-gray-300 hover:text-white hover:duration-200"><NavLink>Chats</NavLink></li>

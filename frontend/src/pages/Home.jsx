@@ -73,8 +73,8 @@ export default function Home() {
 
   return (
     <div className=' no-scrollbar relative'>
-      <Sidebar />
       <Navbar open ={SlideOpen} close={SlideClose}/>
+      <Sidebar />
       <div className=" hero-section flex justify-evenly mt-[15%] md:m-5 bg-gradient-to-r from-cyan-400 to-purple-500 rounded h-dvh ">
         <div className="section1 text-center">
           <h1 ref={welcomeText} className='mt-[20%] text-xl uppercase font-bold text-white mb-2'>Welcome to ChatApp</h1>

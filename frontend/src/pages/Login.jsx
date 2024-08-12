@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loginAsync } from "../store/auth/authReducer";
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
+import Sidebar from "../components/Sidebar";
 
 export default function Login() {
 
@@ -48,6 +49,7 @@ export default function Login() {
   return (
     <div>
       <Navbar />
+      <Sidebar />
       <Toaster />
 
       <div className=" h-screen w-screen overflow-hidden">

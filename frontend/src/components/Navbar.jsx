@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import toast, { Toaster } from 'react-hot-toast';
+import { SlideClose, SlideOpen } from "./Animation";
 
 export default function Navbar(props) {
 
@@ -55,6 +56,7 @@ export default function Navbar(props) {
       setToggle(!toggle);
     }
 
+
     return (
         <div className="bg-blue-600 p-2 flex justify-between w-full fixed top-0">
             <h1 ref={text} className="text-white uppercase font-semibold ">SamChat</h1>
@@ -70,7 +72,7 @@ export default function Navbar(props) {
 
             <div className=" md:hidden">
               
-              {toggle ? <button onClick={()=> {props.close(), makeToggle()}}><i className="ri-close-large-fill text-white text-xl"></i></button> : <button onClick={()=> {props.open(),makeToggle()}}><i className="ri-menu-3-line text-white text-xl"></i></button>}
+              {toggle ? <button onClick={()=> {SlideClose(), makeToggle()}}><i className="ri-close-large-fill text-white text-xl"></i></button> : <button onClick={()=> {SlideOpen(),makeToggle()}}><i className="ri-menu-3-line text-white text-xl"></i></button>}
 
             </div>
             <Toaster />
