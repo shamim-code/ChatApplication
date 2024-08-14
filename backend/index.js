@@ -32,12 +32,28 @@ const io = new Server(server,{
   }
 });
 
-io.on('connection', (socket)=> {
+io.on('connection', (socket) => {
 
-  socket.on("newMessage", (message) =>{
-      io.emit('newMessage', message);
-  })
-})
+  // Assume that the user will send their ID after connection
+  socket.on('join', (userId) => {
+    socket.join(userId); // Join a room with the user ID
+  });
+
+  socket.on('sendMessage', (message) => {
+    const { senderId, receiverId } = message;
+
+    // Emit the message to the receiver's room
+    io.to(receiverId).emit('newMessage', message);
+
+    // Optionally emit back to the sender if you want to update their view too
+    io.to(senderId).emit('newMessage', message);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
+});
+
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello world</h1>');

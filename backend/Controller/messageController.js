@@ -13,19 +13,23 @@ const sendMessage =async(req, res)=>{
     try {
         const conversationId = await conversationModel.aggregate([
             {
-                $match:{members:{$in:[senderId,receiverId]}}
+                $match: {
+                    members: { $all: [senderId, receiverId] },
+                    $expr: { $eq: [{ $size: "$members" }, 2] }
+                }
             },
             {
-                $project:{_id:1}
+                $project: {
+                    _id: 1
+                }
             }
         ])
 
         const newConversation = await messageModel({consversationId:conversationId[0]['_id'], sender: senderId, receiver: receiverId, message:message});
         await newConversation.save();
 
-       
-
         res.status(201).send(newConversation);
+
 
     } catch (error) {
         res.send(error.message);
@@ -41,9 +45,22 @@ const fetchMessage = async(req, res)=>{
 
 
     try {
-        const searchConversation = await conversationModel.findOne({members:{$in:[user1,user2]}});
-        const messages = await messageModel.find({consversationId: searchConversation['_id']});
+        const searchConversation = await conversationModel.aggregate([
+            {
+                $match: {
+                    members: { $all: [user2, user1] },
+                    $expr: { $eq: [{ $size: "$members" }, 2] }
+                }
+            },
+            {
+                $project: {
+                    _id: 1
+                }
+            }
+        ])
+        const messages = await messageModel.find({consversationId: searchConversation[0]['_id']});
         res.send(messages);
+        
         
     } catch (error) {
         res.send(error.message);

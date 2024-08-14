@@ -69,6 +69,7 @@ export default function Home() {
     });
   };
   
+  let islogged = localStorage.getItem("islogged");
   
 
   return (
@@ -80,7 +81,9 @@ export default function Home() {
           <h1 ref={welcomeText} className='mt-[20%] text-xl uppercase font-bold text-white mb-2'>Welcome to ChatApp</h1>
           <p ref={subtitleText} className='text-gray-100'>This is a simple chat application built with React, NodeJS, Express, Socket.IO, and MongoDB.</p>
 
-          <button ref={mybutton} onClick={()=> navigate("/login")} className='opacity-0 bg-white text-sky-500 font-semibold px-4 py-1 mt-[5%] rounded-md hover:bg-blue-500 hover:text-white duration-200'>Get Start</button>
+          <button ref={mybutton} onClick={()=> {
+            islogged ? navigate('/chats'): navigate('/login')
+          } } className='opacity-0 bg-white text-sky-500 font-semibold px-4 py-1 mt-[5%] rounded-md hover:bg-blue-500 hover:text-white duration-200'>Get Start</button>
         </div>
 
         <img ref={banner} className='h-52 mt-10 hidden sm:block sm:mt-16 sm:h-[400px]' src="/email.png" alt="email"  />

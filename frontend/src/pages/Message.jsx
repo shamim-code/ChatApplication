@@ -20,15 +20,23 @@ export default function Message() {
       message: ''
     },
     onSubmit: async (values) => {
-      const res = await axios.post("http://localhost:2000/send/message", {
+      const messageData = {
         senderId: ownId,
         receiverId: receiverId,
         message: values['message']
-      });
+      };
+  
+      const res = await axios.post("http://localhost:2000/send/message", messageData);
+  
+      // Emit the message via socket
+      socket.emit('sendMessage', messageData);
+  
+      // Update the sender's local state immediately
       setMessage((prevMessages) => [...prevMessages, res.data]);
       formik.resetForm();
     }
   });
+  
 
   useEffect(() => {
     const fetchMessages = async () => {
