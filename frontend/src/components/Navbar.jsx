@@ -15,7 +15,7 @@ export default function Navbar(props) {
 
   const logout =()=> {
     localStorage.removeItem('id');
-    localStorage.removeItem('username');
+    localStorage.removeItem('islogged');
     nevigate('/');
   }
 
