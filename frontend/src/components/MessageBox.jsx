@@ -13,7 +13,7 @@ export default function MessageBox(props) {
     <div>
     <p
       id="msg"
-       className="inline-block bg-[#3572EF] p-2 rounded-sm mt-1 text-white text-sm break-words max-w-[300px]"
+       className={messageType === 'own'? 'inline-block bg-gradient-to-r from-purple-600 to-indigo-600 px-2 py-1 rounded-xl mt-1 text-white text-sm break-words max-w-[300px]': "inline-block bg-gradient-to-r from-teal-500 to-emerald-500 px-2 py-1 rounded-xl mt-1 text-white text-sm break-words max-w-[300px]"}
     >
       {message}
     </p>

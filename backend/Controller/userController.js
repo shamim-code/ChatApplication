@@ -103,10 +103,10 @@ const login = async (req, res) => {
         .status(200)
         .send({ status: "success", data: validEmail });
     } else {
-      res.status(401).send("Please enter valid password");
+      res.send({ status: "error", data:"Please enter valid password"});
     }
   } else {
-    res.status(401).send("Enter valid email");
+    res.send({ status: "error", data:"Enter valid email"});
   }
 };
 

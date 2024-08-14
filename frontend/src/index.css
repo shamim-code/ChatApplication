@@ -28,7 +28,7 @@ body,html {
 }
 
 .msg-right {
-    @apply m-2 flex translate-x-[50%]
+    @apply m-2 flex translate-x-[50%] 
 }
 
 .chat-list {
@@ -36,7 +36,7 @@ body,html {
 }
 
 .chat-box{
-    @apply bg-slate-200 rounded-sm px-2 py-1 m-1 cursor-pointer
+    @apply bg-gradient-to-r from-indigo-500 to-blue-500 text-white rounded-sm px-2 py-1 m-1 cursor-pointer
 }
 
 .people-list{

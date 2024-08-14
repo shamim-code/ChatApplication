@@ -26,7 +26,20 @@ export default function Login() {
     },
   })
 
- 
+  const errorNotify = () => toast("Login Failed",{
+    duration:2000,
+    position: "top-center",
+    style: {},
+    icon: "😣",
+    iconTheme: {
+      primary: '#000',
+      secondary: '#fff'
+    },
+    ariaProps: {
+      role: 'status',
+      'aria-live': 'polite',
+    },
+  })
 
 
 
@@ -37,10 +50,13 @@ export default function Login() {
     }, 
     onSubmit: async(values) => {
       const res = await axios.post('http://localhost:2000/login', {email: values['email'], password: values['password']});
+      console.log(res.data['status']);
       if(res.data['status'] === 'success'){
         localStorage.setItem('islogged', true);
         localStorage.setItem('id', res.data['data']['_id']);
         setlogin(true);
+      }else if(res.data['status'] === 'error'){
+        errorNotify();
       }
     }
   })
@@ -65,7 +81,7 @@ export default function Login() {
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                        Sign in to your account
+                        Login to your account
                     </h1>
                     <form onSubmit={TheFormik.handleSubmit} className="space-y-4 md:space-y-6">
                         <div>
