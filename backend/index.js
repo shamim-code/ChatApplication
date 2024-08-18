@@ -63,7 +63,7 @@ app.get('/', (req, res) => {
 //mongodb://localhost:27017/
 
 const connection =()=> {
-    mongoose.connect('mongodb://localhost:27017/chatapp')
+    mongoose.connect('mongodb+srv://shamim:12345@cluster0.yf9lf.mongodb.net/chatapp')
    .then(()=> console.log('MongoDB Connected...'))
    .catch(err => console.log(err));
 }
