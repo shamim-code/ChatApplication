@@ -41,7 +41,7 @@ export default function Message() {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await axios.get(`http://localhost:2000/getMessagesById/${ownId}/${receiverId}`);
+        const response = await axios.get(`https://chatapplication-1-lliu.onrender.com/getMessagesById/${ownId}/${receiverId}`);
         setMessage(response.data);
       } catch (error) {
         console.log(error);

@@ -13,7 +13,7 @@ const {Server} = require('socket.io');
 
 
 app.use(cors({
-  origin: 'http://localhost:5173', // allow requests from this origin only
+  origin: true, // allow requests from this origin only
   credentials: true, // enable cookies
 }));
 app.use(cookieParser());
@@ -27,7 +27,7 @@ const server = http.createServer(app);
 
 const io = new Server(server,{
   cors:{
-    origin: 'http://localhost:5173',
+    origin: true,
     credentials: true, // enable cookies
   }
 });
