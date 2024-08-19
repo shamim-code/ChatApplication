@@ -12,7 +12,8 @@ export default function AddFriend() {
     useEffect(()=> {
         const fetchData = async() => {
           try {
-            const res = await axios.get(`http://localhost:2000/getOthersPeople/${id}`);
+            const res = await axios.get(`https://chatapplication-1-lliu.onrender.com/getOthersPeople/${id}`);
+            console.log("This is add friend",res.data);
             setOthersPeople(res.data);
           } catch (error) {
             console.log(error);

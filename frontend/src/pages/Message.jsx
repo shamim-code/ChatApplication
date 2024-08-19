@@ -26,7 +26,7 @@ export default function Message() {
         message: values['message']
       };
   
-      const res = await axios.post("http://localhost:2000/send/message", messageData);
+      const res = await axios.post("https://chatapplication-1-lliu.onrender.com/send/message", messageData);
   
       // Emit the message via socket
       socket.emit('sendMessage', messageData);

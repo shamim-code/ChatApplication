@@ -13,7 +13,7 @@ export default function Chatbox(props) {
 
   useEffect(()=> {
     async function getUser (){
-      const res = await axios.get(`http://localhost:2000/getSingleUser/${id}`);
+      const res = await axios.get(`https://chatapplication-1-lliu.onrender.com/getSingleUser/${id}`);
       setUser(res.data);
     }
 

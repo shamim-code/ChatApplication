@@ -10,7 +10,7 @@ export default function Chats() {
   const [conversations, setConversations] = useState([]);
   
   async function getConversations (){
-    const res = await axios.get(`http://localhost:2000/getAllConversationsById/${userId}`);
+    const res = await axios.get(`https://chatapplication-1-lliu.onrender.com/getAllConversationsById/${userId}`);
     setConversations(res.data);
   }
 

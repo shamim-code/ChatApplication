@@ -18,7 +18,7 @@ app.use(cors({
 }));
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true })); 
 
 app.use(authRuter);
 app.use(conversationRoute);
@@ -34,18 +34,15 @@ const io = new Server(server,{
 
 io.on('connection', (socket) => {
 
-  // Assume that the user will send their ID after connection
   socket.on('join', (userId) => {
-    socket.join(userId); // Join a room with the user ID
+    socket.join(userId); 
   });
 
   socket.on('sendMessage', (message) => {
     const { senderId, receiverId } = message;
 
-    // Emit the message to the receiver's room
     io.to(receiverId).emit('newMessage', message);
 
-    // Optionally emit back to the sender if you want to update their view too
     io.to(senderId).emit('newMessage', message);
   });
 
@@ -56,7 +53,16 @@ io.on('connection', (socket) => {
 
 
 app.get('/', (req, res) => {
-  res.send('<h1>Hello world</h1>');
+  res.send('Server is runing');
+});
+
+app.get('/api', async(req, res) => {
+  const data = {
+      id: 1,
+      name: 'Sample Data',
+      description: 'This is an example of a GET request.'
+  };
+  await res.json(data);
 });
 
 

@@ -15,7 +15,7 @@ export default function FriendBox(props) {
 
   useEffect(()=>{
     const fetchData =async()=> {
-      const res = await axios.get(`http://localhost:2000/getSingleUser/${id}`);
+      const res = await axios.get(`https://chatapplication-1-lliu.onrender.com/getSingleUser/${id}`);
       setUser(res.data);
     }
 
@@ -25,11 +25,8 @@ export default function FriendBox(props) {
 
   
   const addFriend =async()=>{
-    const res = await axios.post(`http://localhost:2000/conversation/create/${userId}/${id}`);
+    const res = await axios.post(`https://chatapplication-1-lliu.onrender.com/conversation/create/${userId}/${id}`);
   }
-
-
-
 
   return (
     <section className="friend-box box-border" >

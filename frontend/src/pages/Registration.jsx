@@ -48,7 +48,7 @@ export default function Registration() {
       password: ''
     },
     onSubmit: async(values) => {
-      const res = await axios.post('http://localhost:2000/register',{username:values['username'],email:values['email'] ,password:values['password']})
+      const res = await axios.post('https://chatapplication-1-lliu.onrender.com/register',{username:values['username'],email:values['email'] ,password:values['password']})
 
       console.log(res.data['status']);
 

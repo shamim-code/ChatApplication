@@ -18,6 +18,7 @@ const register = async (req, res) => {
   }
 };
 
+
 const getSingleUser = async (req, res) => {
     const userId = req.params.id;
     
@@ -81,33 +82,28 @@ const userIdToExclude = new mongoose.Types.ObjectId(userId);
 };
 
 const login = async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
+  try {
+     const email = req.body.email;
 
-  const validEmail = await userModel.findOne({ email: email });
-  const validPassword = await userModel.findOne({ password: password });
+     const user = await userModel.findOne({email: req.body.email });
 
-  if (validEmail) {
-    if (validPassword) {
-      const token = jwt.sign(
-        { email: req.body.email, id: validEmail._id },
-        "secretKey",
-        { expiresIn: "24h", algorithm: "HS512" }
-      );
-      res
-        .cookie("chatapp", token, {
-          httpOnly: true,
-          secure: true,
-          sameSite: "None",
-        })
-        .status(200)
-        .send({ status: "success", data: validEmail });
-    } else {
-      res.send({ status: "error", data:"Please enter valid password"});
-    }
-  } else {
-    res.send({ status: "error", data:"Enter valid email"});
+    // if (!user) {
+    //   return res.status(400).json({ status: "error", data: "Enter valid email" });
+    // }
+
+    // // Assuming you store hashed passwords
+    // const isPasswordValid = await user.comparePassword(password);
+
+    // if (!isPasswordValid) {
+    //   return res.status(400).json({ status: "error", data: "Please enter valid password" });
+    // }
+
+    res.send(user);
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ status: "error", data: "An unexpected error occurred" });
   }
 };
+
 
 module.exports = { register, login , getSingleUser, getOthersPeople};

@@ -49,7 +49,7 @@ export default function Login() {
        password: '',
     }, 
     onSubmit: async(values) => {
-      const res = await axios.post('http://localhost:2000/login', {email: values['email'], password: values['password']});
+      const res = await axios.post('https://chatapplication-1-lliu.onrender.com/login', {email: values['email'], password: values['password']});
       console.log(res.data['status']);
       if(res.data['status'] === 'success'){
         localStorage.setItem('islogged', true);
