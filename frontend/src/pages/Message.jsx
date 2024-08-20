@@ -82,7 +82,7 @@ export default function Message() {
       <div id='container' className='flex flex-col items-center flex-grow'>
         <section className='fixed top-0 w-full bg-gradient-to-r from-green-400 to-blue-500 flex gap-2 pl-2 py-1 drop-shadow-sm justify-center'>
           <img className='h-8' src="/avatar.png" alt="image" />
-          <p className=' inline-block mt-1'>{param['name']}</p>
+          <p className=' inline-block mt-1'>{param['name']}</p> <button onClick={()=> notification}>Click me</button>
         </section>
 
         <section className='flex-grow w-full md:w-[700px] bg-slate-100 rounded-sm mt-12'>
