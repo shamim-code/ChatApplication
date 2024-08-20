@@ -22,6 +22,7 @@ export default function Chats() {
     <div>
        <Navbar />
        <Sidebar />
+
        <section className="chat-list">
           
           {

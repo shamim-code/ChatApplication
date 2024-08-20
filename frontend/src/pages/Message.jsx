@@ -15,6 +15,11 @@ export default function Message() {
   const lastMessage = useRef(null);
   const messageDiv = useRef(null);
 
+  const notification = ()=>{
+      const audio = new Audio('/notification.mp3');
+      audio.play();
+  }
+
   const formik = useFormik({
     initialValues: {
       message: ''
@@ -27,12 +32,14 @@ export default function Message() {
       };
   
       const res = await axios.post("https://chatapplication-1-lliu.onrender.com/send/message", messageData);
+      notification();
   
       // Emit the message via socket
       socket.emit('sendMessage', messageData);
   
       // Update the sender's local state immediately
       setMessage((prevMessages) => [...prevMessages, res.data]);
+      notification();
       formik.resetForm();
     }
   });
@@ -52,6 +59,7 @@ export default function Message() {
 
     socket.on('newMessage', (newMessage) => {
       if (newMessage.senderId === receiverId || newMessage.senderId === ownId) {
+        notification();
         setMessage((prevMessages) => [...prevMessages, newMessage]);
       }
     });
@@ -69,6 +77,7 @@ export default function Message() {
 
   return (
     <div className='relative min-h-screen flex flex-col'>
+
 
       <div id='container' className='flex flex-col items-center flex-grow'>
         <section className='fixed top-0 w-full bg-gradient-to-r from-green-400 to-blue-500 flex gap-2 pl-2 py-1 drop-shadow-sm justify-center'>
@@ -100,6 +109,8 @@ export default function Message() {
             <i className="ri-send-plane-fill text-blue-500 text-4xl ml-2 "></i>
           </button>
         </form>
+
+        
 
       </div>
     </div>

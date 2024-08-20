@@ -85,20 +85,14 @@ const login = async (req, res) => {
   try {
      const email = req.body.email;
 
-     const user = await userModel.findOne({email: req.body.email });
+     const user = await userModel.findOne({email: req.body.email , password:req.body.password});
 
-    // if (!user) {
-    //   return res.status(400).json({ status: "error", data: "Enter valid email" });
-    // }
-
-    // // Assuming you store hashed passwords
-    // const isPasswordValid = await user.comparePassword(password);
-
-    // if (!isPasswordValid) {
-    //   return res.status(400).json({ status: "error", data: "Please enter valid password" });
-    // }
-
-    res.send(user);
+    if (!user) {
+      return res.status(400).json({ status: "error", data: "Enter valid email" });
+    }else{
+      res.send({status: "success", data:user});
+    }
+    
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ status: "error", data: "An unexpected error occurred" });
